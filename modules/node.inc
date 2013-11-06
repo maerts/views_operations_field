@@ -111,13 +111,13 @@ function node_views_operations_field_operations($node) {
   }
 
   // View revisions operation.
-  if (module_exists('revisioning')) {
+  if (module_exists('revisioning') || module_exists('workbench_moderation')) {
     $text = t('revisions');
     if (user_access('view revisions')) {
       $operations['revisions'] = array(
         '#type' => 'link',
         '#title' => $text,
-        '#href' => "node/{$node->nid}/revisions/{$node->vid}/list",
+        '#href' => module_exists('revisioning') ? "node/{$node->nid}/revisions/{$node->vid}/list" : "node/{$node->nid}/moderation",
         '#options' => array(
           'query' => drupal_get_destination(),
         ),
