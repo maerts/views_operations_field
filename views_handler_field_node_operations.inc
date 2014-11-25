@@ -34,6 +34,11 @@ class views_handler_field_node_operations extends views_handler_field {
 
     $node = new stdClass();
     $node = node_load($values->{$this->aliases['nid']});
+
+    // When working with revision tables, nid may not always be present.
+    if (!$node && !is_null($values->vid)) {
+      $node = node_load(NULL, $values->vid);
+    }
     // Unpublished nodes ignore access control.
     $node->status = 1;
 
